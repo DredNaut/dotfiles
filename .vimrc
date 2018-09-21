@@ -1,87 +1,96 @@
-" ---- Preferences
-    "colo and standard setup stuff
-    set number
-    set relativenumber
-    syntax on
-    filetype plugin indent on
-    set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+" -------PATHOGEN--------{{{
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+" }}}
 
 
-" ---- NOPs
-    "a bunch of no ops
-    inoremap <Up> <Nop>
-    nnoremap <Up> <Nop>
-    inoremap <Down> <Nop>
-    nnoremap <Down> <Nop>
-    inoremap <Left> <Nop>
-    nnoremap <Left> <Nop>
-    inoremap <Right> <Nop>
-    nnoremap <Right> <Nop>
-    "uncomment later if brave enough
-    inoremap <Backspace> <Nop>
-    nnoremap <Backspace> <Nop>
-    inoremap <Enter> <Nop>
-    nnoremap <Enter> <Nop>
-    inoremap <q> <Nop>
-    inoremap <Right> <Nop>
-    nnoremap <q> <Nop>
-    let mapleader = '-'
-    inoremap jk <Esc>
-    nnoremap <leader>sv :vsplit $MYVIMRC<cr>
-    nnoremap <leader>sh :split $MYVIMRC<cr>
-    nnoremap <leader>sr :source $MYVIMRC<cr>
+"-------AIRLINE-------{{{
+set t_Co=256
+set laststatus=2
+let g:Powerline_symbols = 'unicode'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_skip_empty_sections = 1
+let g:airline_theme='wombat'
+" the separator used on the left side
+ let g:airline_left_sep=''
+ " the separator used on the right side
+ let g:airline_right_sep=''
+ " air-line
+  let g:airline_powerline_fonts = 1
 
-    "vim splits yo
-    nmap <silent> <c-k> :wincmd k<CR>
-    nmap <silent> <c-j> :wincmd j<CR>
-    nmap <silent> <c-h> :wincmd h<CR>
-    nmap <silent> <c-l> :wincmd l<CR>
+  if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+      endif
 
-"  ---- Plugin Preferences
-    "fixes colors and other shit
-    execute pathogen#infect()
-    set encoding=utf-8
-    set t_Co=256
-    set foldmethod=manual
-    set scrolloff=90
-    let g:Powerline_symbols = 'unicode'
-    set clipboard=unnamed
+      " unicode symbols
+      let g:airline_left_sep = '»'
+      let g:airline_left_sep = '▶'
+      let g:airline_right_sep = '«'
+      let g:airline_right_sep = '◀'
+      let g:airline_symbols.linenr = '␊'
+      let g:airline_symbols.linenr = '␤'
+      let g:airline_symbols.linenr = '¶'
+      let g:airline_symbols.branch = '⎇'
+      let g:airline_symbols.paste = 'ρ'
+      let g:airline_symbols.paste = 'Þ'
+      let g:airline_symbols.paste = '∥'
+      let g:airline_symbols.whitespace = 'Ξ'
 
-
-" ---- AIRLINE
-    " unicode symbols
-    let g:airline_left_sep = '»'
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '«'
-    let g:airline_right_sep = '◀'
-    let g:airline_symbols.linenr = '␊'
-    let g:airline_symbols.linenr = '␤'
-    let g:airline_symbols.linenr = '¶'
-    let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.paste = 'ρ'
-    let g:airline_symbols.paste = 'Þ'
-    let g:airline_symbols.paste = '∥'
-    let g:airline_symbols.whitespace = 'Ξ'
-
-
-    " airline symbols
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
-    let g:airline_symbols.branch = ''
-    let g:airline_symbols.readonly = ''
-    let g:airline_symbols.linenr = ''
+ "     " airline symbols
+      let g:airline_left_sep = ''
+      let g:airline_left_alt_sep = ''
+      let g:airline_right_sep = ''
+      let g:airline_right_alt_sep = ''
+      let g:airline_symbols.branch = ''
+      let g:airline_symbols.readonly = ''
+      let g:airline_symbols.linenr = ''
     let g:airline_symbols.whitespace = ''
+"}}}
 
-    "Color Schemes
-    let g:airline_theme='badcat'
-    colo Tomorrow-Night-Bright
+" -------DISABLED KEYS-------{{{
+inoremap jk <Esc>
+inoremap <Del> <Nop>
+nnoremap <Del> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Down> <Nop>
+inoremap <Up> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Down> <Nop>
+nnoremap <Up> <Nop>
+nnoremap <q> <Nop>
+" }}}
+" 
+" -------CUSTOM FILE SETTINGS-------{{{
+set relativenumber
+set number
 
-    " air-line fix powerline
-    let g:airline#extensions#tabline#enabled = 1
+set wrap
+set smartindent
+set autoindent
+set wildmode=longest,list,full
+set wildmenu
 
-    let g:airline_powerline_fonts = 1
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
+" Colorscheme
+colorscheme vimbrant
+
+" Give me sane tabs
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+autocmd FileType make setlocal noexpandtab
+
+" Use z-f and z-o for all basic folding needs
+set foldmethod=manual
+
+" Keep that damn cursor in the center of the screen
+set scrolloff=90
+" }}}
+
+" -------VIM FILE SETTINGS-------{{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
