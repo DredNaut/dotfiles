@@ -4,8 +4,18 @@ syntax on
 filetype plugin indent on
 " }}}
 
-
 "-------AIRLINE-------{{{
+
+"Add weather to vim
+"function! UpdateWeather(...)
+"    let b:weather = substitute(system('curl -s "wttr.in/?format=%l%20%c%20%t&period=5" 2>&1'),'\n','','g')
+"    let w:airline_section_y = b:weather
+"    return 0
+"endfunction
+
+"nnoremap uw :call UpdateWeather()<CR>
+"call airline#add_statusline_func('UpdateWeather')
+
 set t_Co=256
 set laststatus=2
 let g:Powerline_symbols = 'unicode'
@@ -49,7 +59,7 @@ let g:airline_theme='wombat'
     let g:airline_symbols.whitespace = ''
 "}}}
 
-" -------DISABLED KEYS-------{{{
+" -------REMAPPED KEYS-------{{{
 inoremap jk <Esc>
 inoremap <Del> <Nop>
 nnoremap <Del> <Nop>
@@ -61,18 +71,25 @@ nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
 nnoremap <Down> <Nop>
 nnoremap <Up> <Nop>
-nnoremap <q> <Nop>
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
+nnoremap <leader>l :ls<CR>:b<space>
+nnoremap ; :FZF<CR>
 " }}}
 " 
 " -------CUSTOM FILE SETTINGS-------{{{
 set relativenumber
 set number
-
-set wrap
+set hlsearch
+set nowrap
 set smartindent
 set autoindent
 set wildmode=longest,list,full
 set wildmenu
+
+" for fuzzy searching
+set rtp+=/usr/local/opt/fzf
 
 " Colorscheme
 colorscheme vimbrant
@@ -86,11 +103,41 @@ set foldmethod=manual
 
 " Keep that damn cursor in the center of the screen
 set scrolloff=90
+
 " }}}
 
 " -------VIM FILE SETTINGS-------{{{
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+" -------TEX FILE SETTINGS-------{{{
+augroup filetype_tex
+    autocmd!
+    autocmd FileType tex setlocal foldmethod=marker
+augroup END
+
+augroup filetype_markdown
+    autocmd!
+    autocmd FileType markdown colorscheme PaperColor
+    autocmd FileType markdown AirlineTheme seagull
+    autocmd FileType markdown     :iabbrev lineblue <ESC>0f a<span style="color:blue"><ESC>A</span><ESC>F>a
+    autocmd FileType markdown     :iabbrev linered <ESC>0f a<span style="color:red"><ESC>A</span><ESC>F>a
+    autocmd FileType markdown     :iabbrev linegreen <ESC>0f a<span style="color:green"><ESC>A</span><ESC>F>a
+    autocmd FileType markdown     :iabbrev lineorange <ESC>0f a<span style="color:orange"><ESC>A</span><ESC>F>a
+    autocmd FileType markdown     :iabbrev rmline <ESC>0f<df>f<df>0
+    autocmd FileType markdown     :iabbrev mdpic <ESC>i![]()<ESC>k$
+
+augroup filetype_tex
+    autocmd!
+    autocmd FileType plaintex     :iabbrev array \left[\begin{array}<ESC>o\end{array}\right]<ESC>
+
+augroup END
+
+augroup filetype_html
+    autocmd!
+    autocmd FileType html set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
 augroup END
 " }}}

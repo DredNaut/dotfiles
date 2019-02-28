@@ -1,45 +1,47 @@
-#
-# ~/.bashrc
-#
+#classic, minimalist prompt + current git branch
 
-[[ $- != *i* ]] && return
+# Shitty title animation
+#( exec "./.animateTitle.sh" )
 
-colors() {
-	local fgc bgc vals seq0
+# Decent title
+( exec "./.drednautTitle.sh" )
 
-	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
-	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
-	printf "Values 40..47 are \e[43mbackground colors\e[m\n"
-	printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
 
-	# foreground colors
-	for fgc in {30..37}; do
-		# background colors
-		for bgc in {40..47}; do
-			fgc=${fgc#37} # white
-			bgc=${bgc#40} # black
 
-			vals="${fgc:+$fgc;}${bgc}"
-			vals=${vals%%;}
 
-			seq0="${vals:+\e[${vals}m}"
-			printf "  %-9s" "${seq0:-(default)}"
-			printf " ${seq0}TEXT\e[m"
-			printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
-		done
-		echo; echo
-	done
-}
 
-[[ -f ~/.extend.bashrc ]] && . ~/.extend.bashrc
+  if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
+      . /opt/local/etc/profile.d/bash_completion.sh
+  fi
+ORANGE_BG='\[\033[48;5;208m\]'
+ORANGE_FG='\[\033[1;38;5;208m\]'
+WHITE_BG='\[\033[48;5;254m\]'
+WHITE_FG='\[\033[38;5;254m\]'
+BLACK_BG='\[\033[48;5;0m\]'
+BLACK_FG='\[\033[38;5;236m\]'
+ARROW_SYM=''
+REGULAR='\e[0m'
+PS1=$"\n${BLACK_FG}${ORANGE_BG}${ARROW_SYM} \u ${REGULAR}${ORANGE_FG}${ARROW_SYM}${WHITE_BG}${BLACK_FG}${ARROW_SYM}${WHITE_BG} \W ${REGULAR}${WHITE_FG}${ARROW_SYM}${REGULAR} "
 
-[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
-#so as not to be disturbed by Ctrl-S ctrl-Q in terminals:
-stty -ixon
-export TERM=xterm-256color
-export CDPATH=~/symlinks
-export VISUAL=vim
-export EDITOR="$VISUAL"
 
-shopt -s checkwinsize
-PS1=$'\[\e[30;1;104m\]\xee\x82\xb0\[\e[97;1;104m\] \u \[\e[94;1;40m\]\xee\x82\xb0 \[\e[30;1;107m\]\xee\x82\xb0\[\e[30;1;107m\] \W \[\e[97;1;49m\]\xee\x82\xb0\e[0m  '
+#colorful
+export CLICOLOR=1
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;31;40'
+export MINICOM='--color on'
+
+export EDITOR=vim
+export PAGER=less
+
+#enable command-line completion for aws
+complete -C aws_completer aws
+
+export TERM=rxvt-256color
+export PATH="$PATH:/Library/TeX/texbin"
+
+
+export PATH=/usr/local/bin:$PATH
+
+set -o vi
+
