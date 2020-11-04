@@ -1,0 +1,40 @@
+syntax on
+filetype plugin indent on
+set t_Co=256
+set laststatus=2
+
+" -------REMAPPED KEYS-------{{{
+inoremap jk <Esc>
+inoremap <Del> <Nop>
+nnoremap <Del> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Down> <Nop>
+inoremap <Up> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Down> <Nop>
+nnoremap <Up> <Nop>
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
+" }}}
+
+" -------CUSTOM FILE SETTINGS-------{{{
+set relativenumber
+set number
+set hlsearch
+set nowrap
+set smartindent
+set autoindent
+set wildmode=longest,list,full
+set wildmenu
+
+" Give me sane tabs
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+autocmd FileType make setlocal noexpandtab
+
+" Use z-f and z-o for all basic folding needs
+set foldmethod=manual
+
+" Keep that damn cursor in the center of the screen
+set scrolloff=90
